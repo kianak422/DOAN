@@ -1,0 +1,65 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Quản lý lịch hẹn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Danh sách lịch hẹn</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Họ tên</th>
+            <th>Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>SĐT</th>
+            <th>Bệnh viện</th>
+            <th>Chuyên khoa</th>
+            <th>Bác sĩ</th>
+            <th>Thời gian khám</th>
+            <th>Lý do khám</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var lich in ViewBag.DanhSachLichHen)
+        {
+            <tr>
+                <td>@lich.HoTen</td>
+                <td>@lich.NgaySinh.ToString("dd/MM/yyyy")</td>
+                <td>@lich.GioiTinh</td>
+                <td>@lich.SoDienThoai</td>
+                <td>@lich.BenhVien</td>
+                <td>@lich.ChuyenKhoa</td>
+                <td>@lich.BacSi</td>
+                <td>@lich.ThoiGianKham.ToString("dd/MM/yyyy")</td>
+                <td>@lich.LyDoKham</td>
+                <td>
+                    @(lich.ChapNhan ? "Đã chấp nhận" : "Chờ xử lý")
+                </td>
+                <td>
+                    @if (!lich.ChapNhan)
+                    {
+                        <form asp-action="XuLyLichHen" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@lich.Id" />
+                            <input type="hidden" name="chapNhan" value="true" />
+                            <input type="datetime-local" name="thoiGianKham" required />
+                            <input type="text" name="ghiChuNhanVien" placeholder="Ghi chú" class="form-control mb-1" />
+                            <button type="submit" class="btn btn-success btn-sm">Chấp nhận</button>
+                        </form>
+                        <form asp-action="XuLyLichHen" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@lich.Id" />
+                            <input type="hidden" name="chapNhan" value="false" />
+                            <button type="submit" class="btn btn-danger btn-sm">Từ chối</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span>@lich.GhiChuNhanVien</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

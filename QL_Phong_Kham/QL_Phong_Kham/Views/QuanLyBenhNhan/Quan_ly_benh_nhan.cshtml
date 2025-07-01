@@ -1,0 +1,80 @@
+﻿@*  
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860  
+*@  
+@{  
+    ViewData["Title"] = "Quản lý bệnh nhân";  
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Nếu có layout dùng chung  
+}  
+
+<h2>Quản lý bệnh nhân</h2>  
+
+<!-- Form thêm / chỉnh sửa bệnh nhân -->  
+
+<form asp-action="AddOrUpdate" method="post">  
+    <input type="hidden" name="Id" value="@ViewBag.BenhNhan?.Id" />  
+
+    <div>  
+        <label>Họ tên:</label>  
+        <input type="text" name="HoTen" value="@ViewBag.BenhNhan?.HoTen" required />  
+    </div>  
+    <div>  
+        <label>Tuổi:</label>  
+        <input type="number" name="Tuoi" value="@ViewBag.BenhNhan?.Tuoi" required />  
+    </div>  
+    <div>  
+        <label>Giới tính:</label>  
+        <select name="GioiTinh">  
+            <option value="Nam" selected="@(ViewBag.BenhNhan?.GioiTinh == "Nam")">Nam</option>  
+            <option value="Nữ" selected="@(ViewBag.BenhNhan?.GioiTinh == "Nữ")">Nữ</option>  
+        </select>  
+    </div>  
+    <div>  
+        <label>Ngày sinh:</label>  
+        <input type="date" name="NgaySinh" value="@(ViewBag.BenhNhan?.NgaySinh != null ? ((DateTime)ViewBag.BenhNhan.NgaySinh).ToString("yyyy-MM-dd") : "")" required />  
+    </div>  
+    <div>  
+        <label>Địa chỉ:</label>  
+        <input type="text" name="DiaChi" value="@ViewBag.BenhNhan?.DiaChi" required />  
+    </div>  
+    <div>  
+        <label>Ghi chú:</label>  
+        <textarea name="GhiChu">@ViewBag.BenhNhan?.GhiChu</textarea>  
+    </div>  
+    <button type="submit">Lưu</button>  
+</form>  
+
+<hr />  
+
+<!-- Danh sách bệnh nhân -->  
+<table border="1" cellpadding="5" cellspacing="0">  
+    <thead>  
+        <tr>  
+            <th>ID</th>  
+            <th>Họ tên</th>  
+            <th>Tuổi</th>  
+            <th>Giới tính</th>  
+            <th>Ngày sinh</th>  
+            <th>Địa chỉ</th>  
+            <th>Ghi chú</th>  
+            <th>Thao tác</th>  
+        </tr>  
+    </thead>  
+    <tbody>  
+        @foreach (var bn in ViewBag.DanhSachBenhNhan)  
+        {  
+            <tr>  
+                <td>@bn.Id</td>  
+                <td>@bn.HoTen</td>  
+                <td>@bn.Tuoi</td>  
+                <td>@bn.GioiTinh</td>  
+                <td>@(bn.NgaySinh != null ? ((DateTime)bn.NgaySinh).ToString("dd/MM/yyyy") : "")</td>  
+                <td>@bn.DiaChi</td>  
+                <td>@bn.GhiChu</td>  
+                <td>  
+                    <a asp-action="Edit" asp-route-id="@bn.Id">Sửa</a> |  
+                    <a asp-action="Delete" asp-route-id="@bn.Id" onclick="return confirm('Bạn có chắc muốn xoá?');">Xoá</a>  
+                </td>  
+            </tr>  
+        }  
+    </tbody>  
+</table>

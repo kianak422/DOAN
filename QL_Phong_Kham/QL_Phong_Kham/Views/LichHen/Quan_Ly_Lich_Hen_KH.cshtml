@@ -1,0 +1,74 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Đặt lịch khám";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Nội dung chi tiết đặt hẹn</h2>
+<form asp-action="DatLich" method="post" class="row g-3">
+    <div class="col-md-6">
+        <label class="form-label">Bệnh viện/phòng khám *</label>
+        <select name="BenhVien" class="form-control" required>
+            <option value="">-- Chọn bệnh viện/phòng khám --</option>
+            @foreach (var bv in ViewBag.BenhViens)
+            {
+                <option value="@bv">@bv</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Thời gian khám *</label>
+        <input type="date" name="ThoiGianKham" class="form-control" required />
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Chuyên khoa</label>
+        <select name="ChuyenKhoa" class="form-control">
+            <option value="">-- Chọn chuyên khoa --</option>
+            @foreach (var ck in ViewBag.ChuyenKhoas)
+            {
+                <option value="@ck">@ck</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Bác sĩ</label>
+        <select name="BacSi" class="form-control">
+            <option value="">-- Chọn bác sĩ --</option>
+            @foreach (var bs in ViewBag.BacSis)
+            {
+                <option value="@bs">@bs</option>
+            }
+        </select>
+    </div>
+    <div class="col-12">
+        <input type="checkbox" name="NguoiNuocNgoai" /> Đặt hẹn cho người nước ngoài
+    </div>
+    <h4 class="mt-4">Thông tin khách hàng</h4>
+    <div class="col-md-6">
+        <label class="form-label">Họ và tên *</label>
+        <input type="text" name="HoTen" class="form-control" required />
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Ngày tháng năm sinh *</label>
+        <input type="date" name="NgaySinh" class="form-control" required />
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Số điện thoại *</label>
+        <input type="text" name="SoDienThoai" class="form-control" required />
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input type="email" name="Email" class="form-control" />
+    </div>
+    <div class="col-12">
+        <label class="form-label">Lý do khám</label>
+        <textarea name="LyDoKham" class="form-control"></textarea>
+    </div>
+    <div class="col-12">
+        <input type="checkbox" required /> Tôi đã đọc và đồng ý với chính sách bảo vệ dữ liệu cá nhân.
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-success">Đặt lịch</button>
+    </div>
+</form>
